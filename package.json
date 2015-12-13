@@ -1,0 +1,29 @@
+{
+  "name": "letiny",
+  "version": "0.0.3-beta",
+  "description": "Tiny ACME client library and CLI",
+  "author": "Anatol Sommer <anatol@anatol.at>",
+  "license": "MPL",
+  "keywords": [
+    "tiny",
+    "acme",
+    "letsencrypt",
+    "client",
+    "cli",
+    "pfx"
+  ],
+  "bin": {
+    "letiny": "./lib/cli.js"
+  },
+  "dependencies": {
+    "colors": "^1.1.0",
+    "mkdirp": "^0.5.1",
+    "node-forge": "^0.6.21",
+    "request": "^2.55.0",
+    "commander": "^2.9.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.3",
+    "better-assert": "^1.0.2"
+  }
+}
