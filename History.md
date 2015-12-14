@@ -1,3 +1,9 @@
+0.0.5-beta / 2015-12
+=======================
+
+  * Added fork option
+  * Added accountKey and privateKey options
+
 0.0.4-beta / 2015-12-13
 =======================
 
