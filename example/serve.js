@@ -73,4 +73,10 @@ module.exports.init = function (deps) {
   http.createServer(acmeResponder).listen(80, function () {
     console.log('Listening http on', this.address());
   });
+
+  return function () {
+    // Note: we should just keep a handle on
+    // the servers and close them each with server.close()
+    process.exit(1); 
+  };
 };

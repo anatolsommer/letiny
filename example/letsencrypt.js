@@ -15,6 +15,7 @@ var acmeDiscoveryUrl = LeCore.stagingServerUrl;
 var challengeStore = require('./challenge-store');
 var certStore = require('./cert-store');
 var serve = require('./serve');
+var closer;
 
 var accountPrivateKeyPem = null;
 var domainPrivateKeyPem = null;
@@ -94,6 +95,7 @@ function runDemo() {
 
                     console.log('[certs]');
                     console.log(err || certs);
+                    closer();
 
                   });
                   
@@ -106,7 +108,7 @@ function runDemo() {
 //
 // Setup the Server
 //
-serve.init({
+closer = serve.init({
   LeCore: LeCore
   // needs a default key and cert chain, anything will do
 , httpsOptions: require('localhost.daplie.com-certificates')
