@@ -1,3 +1,9 @@
+1.0.0 / 2015-12-15
+==================
+
+Stripped down to core components,
+included example, and tested.
+
 0.0.5-beta / 2015-12
 =======================
 
