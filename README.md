@@ -36,6 +36,11 @@ You will follow these steps to obtain certificates:
 
 #### Register Account & Domain
 
+**But wait**, there's more!
+See [example/letsencrypt.js](https://github.com/Daplie/letiny-core/blob/master/example/letsencrypt.js)
+
+See
+
 ```javascript
 'use strict';
 
@@ -44,11 +49,6 @@ var LeCore = require('letiny-core');
 var email = 'user@example.com';                   // CHANGE TO YOUR EMAIL
 var domains = 'example.com';                      // CHANGE TO YOUR DOMAIN
 var acmeDiscoveryUrl = LeCore.stagingServerUrl;   // CHANGE to production, when ready
-
-var challengeStore = require('./challenge-store');
-var certStore = require('./cert-store');
-var serve = require('./serve');
-var closer;
 
 var accountPrivateKeyPem = null;
 var domainPrivateKeyPem = null;
@@ -101,17 +101,6 @@ function runDemo() {
         }
     );
 }
-
-//
-// Setup the Server
-//
-closer = serve.init({
-  LeCore: LeCore
-  // needs a default key and cert chain, anything will do
-, httpsOptions: require('localhost.daplie.com-certificates')
-, challengeStore: challengeStore
-, certStore: certStore
-});
 ```
 
 #### Run a Server on 80, 443, and 5001 (https/tls)
