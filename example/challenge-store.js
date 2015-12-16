@@ -11,7 +11,6 @@
 // but that's super inefficient considering that you need it
 // for all of 500ms and there's no sense in that.
 
-
 var challengeCache = {};
 var challengeStore = {
   set: function (hostname, key, value, cb) {
