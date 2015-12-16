@@ -44,6 +44,7 @@ function init() {
 
 function getPrivateKeys(cb) {
     console.log('Generating Account Keypair');
+    console.log("(Note: if you're using forge and not ursa, this will take a long time");
     LeCore.leCrypto.generateRsaKeypair(2048, 65537, function (err, pems) {
 
         accountPrivateKeyPem = pems.privateKeyPem;
