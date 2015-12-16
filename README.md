@@ -2,9 +2,9 @@
 
 A framework for building letsencrypt clients, forked from `letiny`.
 
-  * browser
-  * node with `forge` (works on windows)
   * node with `ursa` (works fast)
+  * node with `forge` (works on windows)
+  * browser WebCrypto (not implemented, but on the TODO)
   * any javascript implementation
 
 ## Usage:
@@ -12,6 +12,13 @@ A framework for building letsencrypt clients, forked from `letiny`.
 ```bash
 npm install --save letiny-core
 ```
+
+You will follow these steps to obtain certificates:
+
+* discover ACME registration urls with `getAcmeUrls`
+* register a user account with `registerNewAccount`
+* implement a method to agree to the terms of service as `agreeToTos`
+* get certificates with `getCertificate`
 
 ```javascript
 'use strict';
@@ -118,8 +125,8 @@ LeCore = LeCore.create({
 });
 
 // now uses node `request` (could also use jQuery or Angular in the browser)
-LeCore.getAcmeUrls({
-  se
+LeCore.getAcmeUrls(discoveryUrl, function (err, urls) {
+  console.log(urls);
 });
 ```
 
