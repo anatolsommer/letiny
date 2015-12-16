@@ -1,6 +1,6 @@
 {
   "name": "letiny-core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A framework for building letsencrypt clients, forked from letiny",
   "main": "node.js",
   "browser": "browser.js",
