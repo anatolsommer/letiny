@@ -41,50 +41,77 @@ You will follow these steps to obtain certificates:
 
 var LeCore = require('letiny-core');
 
-var accountPrivateKeyPem = '...';                     // leCrypto.generateRsaKeypair(bitLen, exp, cb)
-var domainPrivateKeyPem = '...';                      // (same)
-var challengeStore = { /*get, set, remove*/ };        // see below for example
+var email = 'user@example.com';                   // CHANGE TO YOUR EMAIL
+var domains = 'example.com';                      // CHANGE TO YOUR DOMAIN
+var acmeDiscoveryUrl = LeCore.stagingServerUrl;   // CHANGE to production, when ready
 
-LeCore.getAcmeUrls(
-  LeCore.stagingServerUrl                             // or choose LeCore.productionServerUrl
-, function (err, urls) {
+var challengeStore = require('./challenge-store');
+var certStore = require('./cert-store');
+var serve = require('./serve');
+var closer;
 
+var accountPrivateKeyPem = null;
+var domainPrivateKeyPem = null;
+var acmeUrls = null;
+
+LeCore.leCrypto.generateRsaKeypair(2048, 65537, function (err, pems) {
+    // ...
+    LeCore.getAcmeUrls(acmeDiscoveryUrl, function (err, urls) {
+        // ...
+        runDemo();
+    });
+});
+
+function runDemo() {
     LeCore.registerNewAccount(
-      { newRegUrl: urls.newReg
-      , email: 'user@example.com'
-      , accountPrivateKeyPem: accountPrivateKeyPem
-      , agreeToTerms: function (tosUrl, done) {
-          // agree to these exact terms
-          done(null, tosUrl);
+        { newRegUrl: acmeUrls.newReg
+        , email: email
+        , accountPrivateKeyPem: accountPrivateKeyPem
+        , agreeToTerms: function (tosUrl, done) {
+
+              // agree to the exact version of these terms
+              done(null, tosUrl);
+          }
         }
-      }
-    , function (err, regr) {
+      , function (err, regr) {
 
-        // Note: you should save the registration
-        // record to disk (or db)
+            console.log('Registering New Certificate');
+            LeCore.getCertificate(
+                { newAuthzUrl: acmeUrls.newAuthz
+                , newCertUrl: acmeUrls.newCert
 
-        LeCore.getCertificate(
-          { newAuthzUrl: urls.newAuthz
-          , newCertUrl: urls.newCert
+                , domainPrivateKeyPem: domainPrivateKeyPem
+                , accountPrivateKeyPem: accountPrivateKeyPem
+                , domains: domains
 
-          , domainPrivateKeyPem: domainPrivateKeyPem
-          , accountPrivateKeyPem: accountPrivateKeyPem
+                , setChallenge: challengeStore.set
+                , removeChallenge: challengeStore.remove
+                }
+              , function (err, certs) {
 
-          , setChallenge: challengeStore.set
-          , removeChallenge: challengeStore.remove
-          }
-        , function (err, certs) {
+                  // Note: you should save certs to disk (or db)
+                  certStore.set(domains[0], certs, function () {
 
-            // Note: you should save certs to disk (or db)
-            
-          }
-        )
+                      // ...
 
-      }
+                  });
+
+                }
+            );
+        }
     );
+}
 
-  }
-);
+//
+// Setup the Server
+//
+closer = serve.init({
+  LeCore: LeCore
+  // needs a default key and cert chain, anything will do
+, httpsOptions: require('localhost.daplie.com-certificates')
+, challengeStore: challengeStore
+, certStore: certStore
+});
 ```
 
 #### Run a Server on 80, 443, and 5001 (https/tls)
@@ -92,26 +119,57 @@ LeCore.getAcmeUrls(
 That will fail unless you have a webserver running on 80 and 443 (or 5001)
 to respond to `/.well-known/acme-challenge/xxxxxxxx` with the proper token
 
-```javascript
-var localCerts = require('localhost.daplie.com-certificates'); // needs default certificates
-var http = require('http');
-var httsp = require('https');
+**But wait**, there's more!
+See [example/serve.js](https://github.com/Daplie/letiny-core/blob/master/example/serve.js)
 
+```javascript
+var https = require('https');
+var http = require('http');
+
+
+var LeCore = deps.LeCore;
+var httpsOptions = deps.httpsOptions;
+var challengeStore = deps.challengeStore;
+var certStore = deps.certStore;
+
+
+//
+// Challenge Handler
+//
 function acmeResponder(req, res) {
-  if (0 !== req.url.indexOf(LeCore.acmeChallengePrefixUrl)) {
+  if (0 !== req.url.indexOf(LeCore.acmeChallengePrefix)) {
     res.end('Hello World!');
     return;
   }
 
-  LeCore.
+  var key = req.url.slice(LeCore.acmeChallengePrefix.length);
+
+  challengeStore.get(req.hostname, key, function (err, val) {
+    res.end(val || 'Error');
+  });
 }
 
-http.createServer()
+
+//
+// Server
+//
+https.createServer(httpsOptions, acmeResponder).listen(5001, function () {
+  console.log('Listening https on', this.address());
+});
+http.createServer(acmeResponder).listen(80, function () {
+  console.log('Listening http on', this.address());
+});
 ```
+
+#### Put some storage in place
 
 Finally, you need an implementation of `challengeStore`:
 
-#### Put some storage in place
+**But wait**, there's more!
+See
+
+* [example/challenge-store.js](https://github.com/Daplie/letiny-core/blob/master/challenge-store.js)
+* [example/cert-store.js](https://github.com/Daplie/letiny-core/blob/master/cert-store.js)
 
 ```javascript
 var challengeCache = {};
@@ -128,6 +186,21 @@ var challengeStore = {
     cb(null);
   }
 };
+
+var certCache = {};
+var certStore = {
+  set: function (hostname, certs, cb) {
+    certCache[hostname] = certs;
+    cb(null);
+  }
+, get: function (hostname, cb) {
+    cb(null, certCache[hostname]);
+  }
+, remove: function (hostname, cb) {
+    delete certCache[hostname];
+    cb(null);
+  }
+};
 ```
 
 ## API
@@ -137,7 +210,7 @@ The Goodies
 ```javascript
   { newRegUrl: '...'                          //    no defaults, specify LeCore.nproductionServerUrl
 
-// Accounts 
+// Accounts
 LeCore.registerNewAccount(options, cb)        // returns (err, acmeUrls={newReg,newAuthz,newCert,revokeCert})
 
   { newRegUrl: '...'                          //    no defaults, specify LeCore.newAuthz
