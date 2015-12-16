@@ -7,6 +7,15 @@ A framework for building letsencrypt clients, forked from `letiny`.
   * browser WebCrypto (not implemented, but on the TODO)
   * any javascript implementation
 
+### These aren't the droids you're looking for
+
+This is a library / framework for building letsencrypt clients.
+You probably want one of these pre-built clients instead:
+
+  * `letsencrypt` (100% compatible with the official client)
+  * `letiny` (lightweight client)
+  * `letsencrypt-express` (automatic https for express)
+
 ## Usage:
 
 ```bash
