@@ -150,6 +150,7 @@ LeCore.acmeChallengePrefix                // /.well-known/acme-challenge/
 LeCore.configDir                          // /etc/letsencrypt/
 LeCore.logsDir                            // /var/log/letsencrypt/
 LeCore.workDir                            // /var/lib/letsencrypt/
+LeCore.knownEndpoints                     // new-authz, new-cert, new-reg, revoke-cert
 
 
 // HTTP Client Helpers

@@ -1,5 +1,5 @@
 /*!
- * letsencrypt-core
+ * letiny-core
  * Copyright(c) 2015 AJ ONeal <aj@daplie.com> https://daplie.com
  * Apache-2.0 OR MIT (and hence also MPL 2.0)
 */
@@ -9,6 +9,7 @@ function create(deps) {
   var LeCore = {};
 
   LeCore.leCrypto = deps.leCrypto;
+  LeCore.getAcmeUrls = require('./lib/get-acme-urls').create(deps);
   deps.Acme = LeCore.Acme = require('./lib/acme-client').create(deps);
   LeCore.registerNewAccount = require('./lib/register-new-account').create(deps);
   LeCore.getCertificate = require('./lib/get-certificate').create(deps);
@@ -22,6 +23,7 @@ function create(deps) {
   LeCore.configDir                          = "/etc/letsencrypt/";
   LeCore.logsDir                            = "/var/log/letsencrypt/";
   LeCore.workDir                            = "/var/lib/letsencrypt/";
+  LeCore.knownEndpoints                     = ['new-authz', 'new-cert', 'new-reg', 'revoke-cert'];
 
   return LeCore;
 }
