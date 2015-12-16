@@ -34,6 +34,8 @@ You will follow these steps to obtain certificates:
 * implement a method to get the challenge token as `getChallenge`
 * implement a method to remove the challenge token as `removeChallenge`
 
+#### Register Account & Domain
+
 ```javascript
 'use strict';
 
@@ -85,6 +87,8 @@ LeCore.getAcmeUrls(
 );
 ```
 
+#### Run a Server on 80, 443, and 5001 (https/tls)
+
 That will fail unless you have a webserver running on 80 and 443 (or 5001)
 to respond to `/.well-known/acme-challenge/xxxxxxxx` with the proper token
 
@@ -106,6 +110,8 @@ http.createServer()
 ```
 
 Finally, you need an implementation of `challengeStore`:
+
+#### Put some storage in place
 
 ```javascript
 var challengeCache = {};
