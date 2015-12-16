@@ -19,13 +19,18 @@ You will follow these steps to obtain certificates:
 * register a user account with `registerNewAccount`
 * implement a method to agree to the terms of service as `agreeToTos`
 * get certificates with `getCertificate`
+* implement a method to store the challenge token as `setChallenge`
+* implement a method to get the challenge token as `getChallenge`
+* implement a method to remove the challenge token as `removeChallenge`
 
 ```javascript
 'use strict';
 
 var LeCore = require('letiny-core');
+
 var accountPrivateKeyPem = '...';                     // leCrypto.generateRsaKeypair(bitLen, exp, cb)
 var domainPrivateKeyPem = '...';                      // (same)
+var challengeStore = { /*get, set, remove*/ };        // see below for example
 
 LeCore.getAcmeUrls(
   LeCore.stagingServerUrl                             // or choose LeCore.productionServerUrl
@@ -46,7 +51,10 @@ LeCore.getAcmeUrls(
         // record to disk (or db)
 
         LeCore.getCertificate(
-          {
+          { domainPrivateKeyPem: domainPrivateKeyPem
+          , accountPrivateKeyPem: accountPrivateKeyPem
+          , setChallenge: challengeStore.set
+          , removeChallenge: challengeStore.remove
           }
         , function (err, certs) {
 
@@ -60,6 +68,45 @@ LeCore.getAcmeUrls(
 
   }
 );
+```
+
+That will fail unless you have a webserver running on 80 and 443 (or 5001)
+to respond to `/.well-known/acme-challenge/xxxxxxxx` with the proper token
+
+```javascript
+var localCerts = require('localhost.daplie.com-certificates'); // needs default certificates
+var http = require('http');
+var httsp = require('https');
+
+function acmeResponder(req, res) {
+  if (0 !== req.url.indexOf(LeCore.acmeChallengePrefixUrl)) {
+    res.end('Hello World!');
+    return;
+  }
+
+  LeCore.
+}
+
+http.createServer()
+```
+
+Finally, you need an implementation of `challengeStore`:
+
+```javascript
+var challengeCache = {};
+var challengeStore = {
+  set: function (hostname, key, value, cb) {
+    challengeCache[key] = value;
+    cb(null);
+  }
+, get: function (hostname, key, cb) {
+    cb(null, challengeCache[key]);
+  }
+, remove: function (hostname, key, cb) {
+    delete challengeCache[key];
+    cb(null);
+  }
+};
 ```
 
 ## API
@@ -90,6 +137,7 @@ Helpers & Stuff
 // Constants
 LeCore.productionServerUrl                // https://acme-v01.api.letsencrypt.org/directory
 LeCore.stagingServerUrl                   // https://acme-staging.api.letsencrypt.org/directory
+LeCore.acmeChallengePrefix                // /.well-known/acme-challenge/
 LeCore.configDir                          // /etc/letsencrypt/
 LeCore.logsDir                            // /var/log/letsencrypt/
 LeCore.workDir                            // /var/lib/letsencrypt/
@@ -129,6 +177,12 @@ LeCore.getAcmeUrls(discoveryUrl, function (err, urls) {
   console.log(urls);
 });
 ```
+
+## Authors
+
+  * ISRG
+  * Anatol Sommer  (https://github.com/anatolsommer)
+  * AJ ONeal <aj@daplie.com> (https://daplie.com)
 
 ## Licence
 
