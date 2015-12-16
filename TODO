@@ -1,0 +1,5 @@
+* seperate registerAccount and getCert (getCert calls registerAccount if required)
+* fetch URLs from /directory
+* add webrootChallengeMiddleware
+* add more tests + coverage
+
