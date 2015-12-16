@@ -41,6 +41,7 @@ module.exports.init = function (deps) {
   // SNI Cert Handler
   //
   function certGetter(hostname, cb) {
+    console.log('SNICallback says hello!', hostname);
     certStore.get(hostname, function (err, certs) {
       if (!certs) {
         cb(null, null);
@@ -50,7 +51,7 @@ module.exports.init = function (deps) {
       // Note: you should cache this context in memory
       // so that you aren't creating a new one every time
       var context = tls.createSecureContext({
-        cert: certs.cert
+        cert: certs.cert.toString('ascii') + '\n' + certs.ca.toString('ascii')
       , key: certs.key
       });
 
@@ -69,7 +70,7 @@ module.exports.init = function (deps) {
   https.createServer(httpsOptions, acmeResponder).listen(5001, function () {
     console.log('Listening https on', this.address());
   });
-  http.createServer().listen(80, function () {
+  http.createServer(acmeResponder).listen(80, function () {
     console.log('Listening http on', this.address());
   });
 };
