@@ -1,13 +1,14 @@
 'use strict';
 
-var LeCore = require('letiny-core');
+//var LeCore = require('letiny-core');
+var LeCore = require('../');
 
 var email = process.argv[2] || 'user@example.com';    // CHANGE TO YOUR EMAIL
 var domains = [process.argv[3] || 'example.com'];     // CHANGE TO YOUR DOMAIN
 var acmeDiscoveryUrl = LeCore.stagingServerUrl;
 
 var challengeStore = require('./challenge-store');
-var certStore = require('cert-store');
+var certStore = require('./cert-store');
 var serve = require('./serve');
 
 var accountPrivateKeyPem = null;
@@ -34,10 +35,10 @@ function init() {
 }
 
 function getPrivateKeys() {
-    LeCore.leCrypto.generateRsaKeypair(2048, 65537, function (pems) {
+    LeCore.leCrypto.generateRsaKeypair(2048, 65537, function (err, pems) {
 
         accountPrivateKeyPem = pems.privateKeyPem;
-        LeCore.leCrypto.generateRsaKeypair(2048, 65537, function (pems) {
+        LeCore.leCrypto.generateRsaKeypair(2048, 65537, function (err, pems) {
 
             domainPrivateKeyPem = pems.privateKeyPem;
 
