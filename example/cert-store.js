@@ -1,7 +1,12 @@
+/*!
+ * letiny-core
+ * Copyright(c) 2015 AJ ONeal <aj@daplie.com> https://daplie.com
+ * Apache-2.0 OR MIT (and hence also MPL 2.0)
+*/
+'use strict';
+
 // It's good to have a place to store the certificates so you can,
 // y'know, use them! :-)
-
-'use strict';
 
 // you receive a hostname and must give back an object
 // with a public cert chain and a private key

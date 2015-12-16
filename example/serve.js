@@ -1,6 +1,12 @@
+/*!
+ * letiny-core
+ * Copyright(c) 2015 AJ ONeal <aj@daplie.com> https://daplie.com
+ * Apache-2.0 OR MIT (and hence also MPL 2.0)
+*/
+'use strict';
+
 // That will fail unless you have a webserver running on 80 and 443 (or 5001)
 // to respond to `/.well-known/acme-challenge/xxxxxxxx` with the proper token
-'use strict';
 
 module.exports.init = function (deps) {
   var tls = require('tls');

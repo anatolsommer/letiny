@@ -1,6 +1,11 @@
-// Finally, you need an implementation of `challengeStore`:
-
+/*!
+ * letiny-core
+ * Copyright(c) 2015 AJ ONeal <aj@daplie.com> https://daplie.com
+ * Apache-2.0 OR MIT (and hence also MPL 2.0)
+*/
 'use strict';
+
+// Finally, you need an implementation of `challengeStore`:
 
 // Note:
 // key is the xxxx part of `/.well-known/acme-challenge/xxxx`

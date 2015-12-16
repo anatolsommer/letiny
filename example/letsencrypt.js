@@ -1,3 +1,8 @@
+/*!
+ * letiny-core
+ * Copyright(c) 2015 AJ ONeal <aj@daplie.com> https://daplie.com
+ * Apache-2.0 OR MIT (and hence also MPL 2.0)
+*/
 'use strict';
 
 //var LeCore = require('letiny-core');
@@ -24,9 +29,11 @@ init();
 function init() {
     getPrivateKeys(function () {
 
-        LeCore.getAcmeUrls(acmeDiscoveryUrl, function (urls) {
+        console.log('Getting Acme Urls');
+        LeCore.getAcmeUrls(acmeDiscoveryUrl, function (err, urls) {
         // in production choose LeCore.productionServerUrl
 
+            console.log('Got Acme Urls', err, urls);
             acmeUrls = urls;
             runDemo();
 
@@ -35,18 +42,21 @@ function init() {
 }
 
 function getPrivateKeys() {
+    console.log('Generating Account Keypair');
     LeCore.leCrypto.generateRsaKeypair(2048, 65537, function (err, pems) {
 
         accountPrivateKeyPem = pems.privateKeyPem;
+        console.log('Generating Domain Keypair');
         LeCore.leCrypto.generateRsaKeypair(2048, 65537, function (err, pems) {
 
             domainPrivateKeyPem = pems.privateKeyPem;
-
+            runDemo();
         });
     });
 }
 
 function runDemo() {
+    console.log('Registering New Account');
     LeCore.registerNewAccount(
         { newRegUrl: acmeUrls.newReg
         , email: email
@@ -66,6 +76,7 @@ function runDemo() {
             console.log('[regr]');
             console.log(regr);
 
+            console.log('Registering New Certificate');
             LeCore.getCertificate(
                 { domainPrivateKeyPem: domainPrivateKeyPem
                 , accountPrivateKeyPem: accountPrivateKeyPem
