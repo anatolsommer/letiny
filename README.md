@@ -14,8 +14,8 @@ Supports all of:
 This is a library / framework for building letsencrypt clients.
 You probably want one of these pre-built clients instead:
 
-  * `letsencrypt` (100% compatible with the official client)
-  * `letiny` (lightweight client)
+  * [`letsencrypt`](https://github.com/Daplie/node-letsencrypt) (compatible with the official client)
+  * `letiny` (lightweight client cli)
   * `letsencrypt-express` (automatic https for express)
 
 ## Install & Usage:
