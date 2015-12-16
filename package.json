@@ -6,6 +6,8 @@
     "Anatol Sommer <anatol@anatol.at>",
     "AJ ONeal <aj@daplie.com>"
   ],
+  "main": "node.js",
+  "browser": "browser.js",
   "license": "MPL-2.0",
   "repository": {
     "type": "git",
