@@ -1,7 +1,7 @@
 {
   "name": "letiny-core",
   "version": "1.0.0",
-  "description": "Tiny ACME client library and CLI",
+  "description": "A framework for building letsencrypt clients, forked from `letiny`",
   "authors": [
     "Anatol Sommer <anatol@anatol.at>",
     "AJ ONeal <aj@daplie.com>"
