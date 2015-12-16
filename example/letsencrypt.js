@@ -41,7 +41,7 @@ function init() {
     });
 }
 
-function getPrivateKeys() {
+function getPrivateKeys(cb) {
     console.log('Generating Account Keypair');
     LeCore.leCrypto.generateRsaKeypair(2048, 65537, function (err, pems) {
 
@@ -50,7 +50,7 @@ function getPrivateKeys() {
         LeCore.leCrypto.generateRsaKeypair(2048, 65537, function (err, pems) {
 
             domainPrivateKeyPem = pems.privateKeyPem;
-            runDemo();
+            cb();
         });
     });
 }

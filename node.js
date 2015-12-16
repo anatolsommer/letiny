@@ -8,12 +8,6 @@
 function create(deps) {
   var LeCore = {};
 
-  LeCore.leCrypto = deps.leCrypto;
-  LeCore.getAcmeUrls = require('./lib/get-acme-urls').create(deps);
-  deps.Acme = LeCore.Acme = require('./lib/acme-client').create(deps);
-  LeCore.registerNewAccount = require('./lib/register-new-account').create(deps);
-  LeCore.getCertificate = require('./lib/get-certificate').create(deps);
-
   // Note: these are NOT DEFAULTS
   // They are de facto standards that you may
   // or may not use in your implementation
@@ -24,6 +18,15 @@ function create(deps) {
   LeCore.logsDir                            = "/var/log/letsencrypt/";
   LeCore.workDir                            = "/var/lib/letsencrypt/";
   LeCore.knownEndpoints                     = ['new-authz', 'new-cert', 'new-reg', 'revoke-cert'];
+
+  deps.LeCore = LeCore;
+  deps.Acme = LeCore.Acme = require('./lib/acme-client').create(deps);
+
+  LeCore.getAcmeUrls = require('./lib/get-acme-urls').create(deps);
+  LeCore.registerNewAccount = require('./lib/register-new-account').create(deps);
+  LeCore.getCertificate = require('./lib/get-certificate').create(deps);
+
+  LeCore.leCrypto = deps.leCrypto;
 
   return LeCore;
 }
