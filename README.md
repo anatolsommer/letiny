@@ -60,8 +60,12 @@ LeCore.getAcmeUrls(
         // record to disk (or db)
 
         LeCore.getCertificate(
-          { domainPrivateKeyPem: domainPrivateKeyPem
+          { newAuthzUrl: urls.newAuthz
+          , newCertUrl: urls.newCert
+
+          , domainPrivateKeyPem: domainPrivateKeyPem
           , accountPrivateKeyPem: accountPrivateKeyPem
+
           , setChallenge: challengeStore.set
           , removeChallenge: challengeStore.remove
           }

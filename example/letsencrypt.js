@@ -63,9 +63,8 @@ function runDemo() {
         , accountPrivateKeyPem: accountPrivateKeyPem
         , agreeToTerms: function (tosUrl, done) {
 
-              // agree to these exact terms
-              console.log('[tosUrl]');
-              console.log(tosUrl);
+              // agree to the exact version of these terms
+              console.log('[tosUrl]:', tosUrl);
               done(null, tosUrl);
           }
         }
@@ -74,15 +73,19 @@ function runDemo() {
             // Note: you should save the registration
             // record to disk (or db)
             console.log('[regr]');
-            console.log(regr);
+            console.log(err || regr);
 
             console.log('Registering New Certificate');
             LeCore.getCertificate(
-                { domainPrivateKeyPem: domainPrivateKeyPem
+                { newAuthzUrl: acmeUrls.newAuthz
+                , newCertUrl: acmeUrls.newCert
+
+                , domainPrivateKeyPem: domainPrivateKeyPem
                 , accountPrivateKeyPem: accountPrivateKeyPem
+                , domains: domains
+
                 , setChallenge: challengeStore.set
                 , removeChallenge: challengeStore.remove
-                , domains: domains
                 }
               , function (err, certs) {
 
@@ -90,7 +93,7 @@ function runDemo() {
                   certStore.set(domains[0], certs, function () {
 
                     console.log('[certs]');
-                    console.log(certs);
+                    console.log(err || certs);
 
                   });
                   
