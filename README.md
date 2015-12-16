@@ -23,19 +23,21 @@ leCore.
 
 ## API
 
-```
-LeCore.registerNewAccount();
+```javascript
+LeCore.registerNewAccount(options, cb);
 
-LeCore.getCertificate();
+LeCore.getCertificate(options, cb);
 
-LeCore.Acme                     // Signs requests with JWK
-  acme = new Acme(lePrivateKey) // privateKey format is abstract
-  acme.post(url, body, cb)      // POST with signature
-  acme.parseLinks(link)         // (internal) parses 'link' header
-  acme.getNonce(url, cb)        // (internal) HEAD request to get 'replay-nonce' strings
+LeCore.Acme                               // Signs requests with JWK
+  acme = new Acme(lePrivateKey)           // privateKey format is abstract
+  acme.post(url, body, cb)                // POST with signature
+  acme.parseLinks(link)                   // (internal) parses 'link' header
+  acme.getNonce(url, cb)                  // (internal) HEAD request to get 'replay-nonce' strings
 
 LeCore.leCrypto
-  generateSignature(lePrivateKey, nodeBufferBody, nonceString)
+  thumbprint(lePubKey)                          // generates thumbprint
+  generateSignature(lePrivKey, bodyBuf, nonce)  // generates a signature
+  importPemPrivateKey(privateKeyPem);           // returns abstract private key
 ```
 
 For testing and development, you can also inject the dependencies you want to use:

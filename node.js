@@ -9,7 +9,7 @@ function create(deps) {
   var LeCore = {};
 
   LeCore.leCrypto = deps.leCrypto;
-  LeCore.Acme = require('./lib/acme-client').create(deps);
+  deps.Acme = LeCore.Acme = require('./lib/acme-client').create(deps);
   LeCore.registerNewAccount = require('./lib/register-new-account').create(deps);
   LeCore.getCertificate = require('./lib/get-certificate').create(deps);
 
