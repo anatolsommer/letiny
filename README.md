@@ -2,9 +2,11 @@
 
 A framework for building letsencrypt clients, forked from `letiny`.
 
+Supports all of:
+
   * node with `ursa` (works fast)
   * node with `forge` (works on windows)
-  * browser WebCrypto (not implemented, but on the TODO)
+  * browser WebCrypto (not implemented, but... Let's Encrypt over WebRTC anyone?)
   * any javascript implementation
 
 ### These aren't the droids you're looking for
