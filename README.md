@@ -17,8 +17,8 @@ require('letiny').getCert({
   keyFile:'./key.pem',
   caFile:'./ca.pem',
   agreeTerms:true
-}, function(err, cert, key, cacert) {
-  console.log(err || cert+'\n'+key+'\n'+cacert);
+}, function(err, cert, key, caCert, accountKey) {
+  console.log(err || cert+'\n'+key+'\n'+caCert);
 });
 ```
 
@@ -36,8 +36,8 @@ require('letiny').getCert({
   keyFile:'./key.pem',
   caFile:'./ca.pem',
   agreeTerms:true
-}, function(err, cert, key, cacert) {
-  console.log(err || cert+'\n'+key+'\n'+cacert);
+}, function(err, cert, key, caCert, accountKey) {
+  console.log(err || cert+'\n'+key+'\n'+caCert);
 });
 ```
 

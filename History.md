@@ -1,8 +1,9 @@
-0.0.5-beta / 2015-12
+0.0.5-beta / 2015-12-17
 =======================
 
   * Added fork option
   * Added accountKey and privateKey options
+  * Added accountKey to getCert callback
 
 0.0.4-beta / 2015-12-13
 =======================
