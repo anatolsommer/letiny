@@ -1,5 +1,6 @@
-* seperate registerAccount and getCert (getCert calls registerAccount if required)
+* seperate registerAccount and requestCertificate
 * fetch URLs from /directory
 * add webrootChallengeMiddleware
+* add getValidBeforeDate helper
 * add more tests + coverage
 
