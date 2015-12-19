@@ -1,7 +1,7 @@
 0.1.0-beta / 2015-12-
 =======================
   * Moved "Acme" to acme.js
-  *
+  * prepeareKey handles privateKey and accountKey
 
 0.0.5-beta / 2015-12-17
 =======================

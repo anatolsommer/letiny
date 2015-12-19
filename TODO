@@ -1,4 +1,3 @@
-* seperate registerAccount and requestCertificate
 * fetch URLs from /directory
 * add webrootChallengeMiddleware
 * add getValidBeforeDate helper
