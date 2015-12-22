@@ -1,5 +1,3 @@
 * fetch URLs from /directory
-* add webrootChallengeMiddleware
-* add getValidBeforeDate helper
 * add more tests + coverage
 
