@@ -3,6 +3,7 @@
   * Moved "Acme" to acme.js
   * prepeareKey handles privateKey and accountKey
   * added getExpirationDate helper
+  * added webrootChallengeMiddleware
 
 0.0.5-beta / 2015-12-17
 =======================
