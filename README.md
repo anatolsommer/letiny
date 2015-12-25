@@ -54,8 +54,8 @@ require('letiny').getCert({
  * `caFile`: Path to save issuer certificate
  * `pfxFile`: Path to save PKCS#12 certificate
  * `pfxPassword`: Password for PKCS#12 certificate
- * `accountKey`: (string), path or PEM
- * `privateKey`: (string), PEM
+ * `accountKey`: (string), PEM or path to load or save key
+ * `privateKey`: (string), PEM or path to load or save key
  * `aes`: (boolean), use AES instead of 3DES for PKCS#12 certificate
  * `newReg`: URL, use *https://acme-staging.api.letsencrypt.org/acme/new-reg* for testing
  * `fork`: (boolean), fork a child process
@@ -71,9 +71,9 @@ require('letiny').getCert({
 -m, --manual             use manual verification
 -d, --domains <domains>  domains (comma seperated)
 -c, --cert <path>        path to save your certificate (cert.pem)
--k, --key <path>         path to save your private key (privkey.pem)
+-k, --key <path>         path to load or save your private key (privkey.pem)
 -i, --ca <path>          path to save issuer certificate (cacert.pem)
--a, --account <path>     path of the account key (optional)
+-a, --account <path>     path to load or save account key (optional)
 --pfx <path>             path to save PKCS#12 certificate (optional)
 --password <password>    password for PKCS#12 certificate (optional)
 --aes                    use AES instead of 3DES for PKCS#12
