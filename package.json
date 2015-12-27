@@ -1,6 +1,6 @@
 {
   "name": "letiny",
-  "version": "0.0.5-beta",
+  "version": "0.1.0-beta",
   "description": "Tiny ACME client library and CLI",
   "author": "Anatol Sommer <anatol@anatol.at>",
   "license": "MPL-2.0",

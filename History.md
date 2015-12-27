@@ -1,9 +1,10 @@
-0.1.0-beta / 2015-12-
+0.1.0-beta / 2015-12-27
 =======================
-  * Moved "Acme" to acme.js
-  * prepeareKey handles privateKey and accountKey
+  * fetching URLs from directory
   * added getExpirationDate helper
   * added webrootChallengeMiddleware
+  * prepeareKey handles privateKey and accountKey
+  * Moved "Acme" to acme.js
 
 0.0.5-beta / 2015-12-17
 =======================

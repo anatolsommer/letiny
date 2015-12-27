@@ -1,8 +1,8 @@
 var forge=require('node-forge'), assert=require('better-assert'), fs=require('fs'),
   letiny=require('../lib/client'), config=require('./config.json'),
-  res, newReg='https://acme-staging.api.letsencrypt.org/acme/new-reg';
+  res, testingUrl='https://acme-staging.api.letsencrypt.org';
 
-config.newReg=config.newReg || newReg;
+config.url=config.url || testingUrl;
 config.pfxFile=config.pfxFile || './tmp.pfx';
 config.pfxPassword=config.pfxPassword || 'passwd';
 
