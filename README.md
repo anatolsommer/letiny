@@ -57,7 +57,7 @@ require('letiny').getCert({
  * `accountKey`: (string), PEM or path to load or save key
  * `privateKey`: (string), PEM or path to load or save key
  * `aes`: (boolean), use AES instead of 3DES for PKCS#12 certificate
- * `newReg`: URL, use *https://acme-staging.api.letsencrypt.org/acme/new-reg* for testing
+ * `url`: server URL, use *https://acme-staging.api.letsencrypt.org* for testing
  * `fork`: (boolean), fork a child process
 
 
@@ -78,7 +78,7 @@ require('letiny').getCert({
 --password <password>    password for PKCS#12 certificate (optional)
 --aes                    use AES instead of 3DES for PKCS#12
 --agree                  agree terms of the ACME CA (required)
---newreg <URL>           optional AMCE server newReg URL
+--url <URL>              optional AMCE server URL
 --debug                  print debug information
 ```
 When --pfx is used without --cert, --key and --ca no .pem files will be created.
