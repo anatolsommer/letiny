@@ -76,7 +76,7 @@ require('letiny').getCert({
   certFile:'/etc/ssl/private/example.com/cert.pem',
   caFile:'/etc/ssl/private/example.com/ca.pem',
   privateKey:'/etc/ssl/private/example.com/key.pem',
-  accountKey:/etc/ssl/private/example.com/account.pem,
+  accountKey:'/etc/ssl/private/example.com/account.pem',
   agreeTerms:true
 }, function(err) {
   console.log(err);
