@@ -35,7 +35,7 @@ letiny --email me@example.com --webroot ./ --domains example.com --agree
 ```
 
 
-## Library:
+## Library
 `npm install letiny`
 
 ### Using the "webroot" option
@@ -82,6 +82,7 @@ require('letiny').getCert({
   console.log(err);
 });
 ```
+Executing the same code again later, will renew the certificate using the existing account and private key.
 
 
 ### Options
@@ -90,6 +91,8 @@ require('letiny').getCert({
  * `domains`: (comma seperated string or array)
  * `agreeTerms`: (boolean), You need to agree the terms
  * `webroot` (string) or `challenge` (function)
+
+If you provide "webroot" **and** "challenge" option, "challenge" will be ignored.
 
 #### Optional:
  * `certFile`: (string), Path to save certificate
@@ -104,7 +107,7 @@ require('letiny').getCert({
  * `fork`: (boolean), fork a child process
 
 
-### Helper
+### Helper functions
 #### webrootChallengeMiddleware
 Serves webroot challenge files from a directory (can differ from public directory).
 ```js
@@ -115,7 +118,7 @@ app.use(letiny.webrootChallengeMiddleware()); // default: './'
 ```
 
 #### getExpirationDate
-Returns a javascript Date for validBefore field of a pem string.
+Returns a javascript Date for "validBefore" field of a Base64 encoded DER certificate string.
 ```js
 var expires=letiny.getExpirationDate(certPem);
 ```

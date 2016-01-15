@@ -1,5 +1,12 @@
+0.1.1 / 2016-01-15
+==================
+
+  * improved documentation
+  * stable release
+
 0.1.0-beta / 2015-12-27
 =======================
+
   * fetching URLs from directory
   * added getExpirationDate helper
   * added webrootChallengeMiddleware
