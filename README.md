@@ -9,8 +9,9 @@ Tiny acme client library and CLI to obtain ssl certificates (without using exter
 ```
 -h, --help               output usage information
 -e, --email <email>      your email address
--w, --webroot <path>     path for webroot verification
--m, --manual             use manual verification
+-w, --webroot <path>     path for webroot verification OR
+-m, --manual             use manual webroot verification OR
+-n, --dns                use manual DNS verification
 -d, --domains <domains>  domains (comma seperated)
 -c, --cert <path>        path to save your certificate (cert.pem)
 -k, --key <path>         path to load or save your private key (privkey.pem)
@@ -32,6 +33,7 @@ letiny -e me@example.com -m -d example.com -a account.pem -c cert.pem -k key.pem
 letiny -e me@example.com -m -d example.com,www.example.com --agree
 letiny -e me@example.com -m -d example.com --pfx cert.pfx --password secret --agree
 letiny --email me@example.com --webroot ./ --domains example.com --agree
+letiny --email me@example.com --dns --domains example.com --agree
 ```
 
 
@@ -51,7 +53,7 @@ require('letiny').getCert({
 });
 ```
 
-### Using the "challenge" option
+### Using the "challenge" option with webroot verification
 This allows you to provide the challenge data on your own, so you can obtain certificates on-the-fly within your software.
 ```js
 require('letiny').getCert({
@@ -59,6 +61,22 @@ require('letiny').getCert({
   domains:'example.com',
   challenge:function(domain, path, data, done) {
     // make http://+domain+path serving "data"
+    done();
+  },
+  agreeTerms:true
+}, function(err, cert, key, caCert, accountKey) {
+  console.log(err || cert+'\n'+key+'\n'+caCert);
+});
+```
+
+### Using the "challenge" option with DNS verification
+```js
+require('letiny').getCert({
+  method:'dns-01',
+  email:'me@example.com',
+  domains:'example.com',
+  challenge:function(domain, _, data, done) {
+    // _acme-challenge.[DOMAIN] TXT [DATA]
     done();
   },
   agreeTerms:true
@@ -95,6 +113,7 @@ Executing the same code again later, will renew the certificate using the existi
 If you provide "webroot" **and** "challenge" option, "challenge" will be ignored.
 
 #### Optional:
+ * `method`: (string), can be "http-01" (default) or "dns-01"
  * `certFile`: (string), Path to save certificate
  * `keyFile`: (string), Path to save private key
  * `caFile`: (string), Path to save issuer certificate

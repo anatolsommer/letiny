@@ -1,3 +1,9 @@
+0.2.1 / 2017-05-01
+==================
+
+  * working dns-01 implementation
+  * fixed CLI compatibility bug
+
 0.2.0-beta / 2017-01-15
 =======================
 
